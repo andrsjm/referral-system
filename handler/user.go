@@ -82,7 +82,7 @@ func (h *userHandler) GenerateNewReferral(w http.ResponseWriter, r *http.Request
 
 	referralLink, err := h.flow.GenerateNewCode(user)
 	if err != nil {
-		h.presenter.SendError(w, "Error Insert")
+		h.presenter.SendError(w, "Error Generate")
 		return
 	}
 

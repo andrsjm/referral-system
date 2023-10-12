@@ -11,7 +11,7 @@ type MockUserRepo struct {
 	mock.Mock
 }
 
-func (m *MockUserRepo) Login(user entity.User) (entity.User, error) {
+func (m *MockUserRepo) Login(user entity.User) (users entity.User, err error) {
 	args := m.Called(user)
 	return args.Get(0).(entity.User), args.Error(1)
 }
