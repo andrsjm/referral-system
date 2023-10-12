@@ -10,7 +10,7 @@ type BaseResponse struct {
 	Status       int         `json:"status"`
 	Message      string      `json:"message"`
 	Data         interface{} `json:"data,omitempty"`
-	ReferralLink string      `json:"count,omitempty"`
+	ReferralLink string      `json:"referral_link,omitempty"`
 }
 
 type jsonPresenter struct{}

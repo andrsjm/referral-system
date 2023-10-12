@@ -8,6 +8,10 @@ import (
 	"referral-system/repository"
 	"referral-system/util"
 
+	_ "referral-system/docs"
+
+	httpSwagger "github.com/swaggo/http-swagger"
+
 	"github.com/gorilla/mux"
 )
 
@@ -45,6 +49,8 @@ func SetupRouter() http.Handler {
 	//Contributor Routes
 	// r.Handle("/referral/{code}", UserTypeMiddleware([]int{}, http.HandlerFunc(contributorHandler.Referral))).Methods("POST")
 	r.HandleFunc("/referral/{code}", http.HandlerFunc(contributorHandler.Referral)).Methods("POST")
+
+	r.PathPrefix("/documentation/").Handler(httpSwagger.WrapHandler)
 
 	return r
 }

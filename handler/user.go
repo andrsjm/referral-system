@@ -5,6 +5,8 @@ import (
 	"referral-system/flow"
 	"referral-system/parser"
 	"referral-system/util"
+
+	_ "referral-system/docs"
 )
 
 type userHandler struct {
@@ -21,6 +23,17 @@ func NewUserHandler(parser parser.IUserParser, presenter util.IPresenterJSON, fl
 	}
 }
 
+// Register handles user registration.
+// @Summary Register a new user
+// @Description This endpoint allows users to register with an email, password, and name.
+// @ID register
+// @Accept json
+// @Produce json
+// @Param user body entity.User true "User registration information"
+// @Success 200 {string} string "OK"
+// @Failure 400 {string} string "Bad Request"
+// @Failure 500 {string} string "Internal Server Error"
+// @Router /user [post]
 func (h *userHandler) Register(w http.ResponseWriter, r *http.Request) {
 	user, err := h.parser.ParseUserEntity(r)
 	if err != nil {
@@ -37,6 +50,18 @@ func (h *userHandler) Register(w http.ResponseWriter, r *http.Request) {
 	h.presenter.SendSuccessWithReferral(w, referralLink)
 }
 
+// Login handles user login.
+// @Summary User login
+// @Description This endpoint allows users to log in with an email and password.
+// @ID login
+// @Accept json
+// @Produce json
+// @Param user body entity.User true "User login information"
+// @Success 200 {string} string "OK"
+// @Failure 400 {string} string "Bad Request"
+// @Failure 401 {string} string "Unauthorized"
+// @Failure 500 {string} string "Internal Server Error"
+// @Router /login [post]
 func (h *userHandler) Login(w http.ResponseWriter, r *http.Request) {
 	user, err := h.parser.ParseUserEntity(r)
 	if err != nil {
@@ -55,12 +80,32 @@ func (h *userHandler) Login(w http.ResponseWriter, r *http.Request) {
 	h.presenter.SendSuccess(w)
 }
 
+// Logout handles user logout.
+// @Summary User logout
+// @Description This endpoint allows users to log out.
+// @ID logout
+// @Accept json
+// @Produce json
+// @Success 200 {string} string "OK"
+// @Router /logout [post]
 func (h *userHandler) Logout(w http.ResponseWriter, r *http.Request) {
 	util.ResetUsersToken(w)
 
 	h.presenter.SendSuccess(w)
 }
 
+// Update handles user profile updates.
+// @Summary Update user profile
+// @Description This endpoint allows users to update their profile information.
+// @ID update
+// @Accept json
+// @Produce json
+// @Param user body entity.User true "User update information"
+// @Success 200 {string} string "OK"
+// @Failure 400 {string} string "Bad Request"
+// @Failure 401 {string} string "Unauthorized"
+// @Failure 500 {string} string "Internal Server Error"
+// @Router /user [put]
 func (h *userHandler) Update(w http.ResponseWriter, r *http.Request) {
 	user, err := h.parser.ParseUserEntity(r)
 	if err != nil {
@@ -77,6 +122,17 @@ func (h *userHandler) Update(w http.ResponseWriter, r *http.Request) {
 	h.presenter.SendSuccess(w)
 }
 
+// GenerateNewReferral generates a new referral code.
+// @Summary Generate a new referral code
+// @Description This endpoint generates a new referral code for the user.
+// @ID generateReferral
+// @Accept json
+// @Produce json
+// @Success 200 {string} string "OK"
+// @Failure 400 {string} string "Bad Request"
+// @Failure 401 {string} string "Unauthorized"
+// @Failure 500 {string} string "Internal Server Error"
+// @Router /generate/referral [post]
 func (h *userHandler) GenerateNewReferral(w http.ResponseWriter, r *http.Request) {
 	user := h.parser.ParseUserFromCoockies(r)
 
