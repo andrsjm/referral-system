@@ -21,9 +21,9 @@ func NewUserFlow(userRepo repository.IUserRepository, referralRepo repository.IR
 }
 
 func (f *userFlow) Login(user entity.User) (entity.User, error) {
-	user, err := f.repoUser.Login(user)
+	users, err := f.repoUser.Login(user)
 
-	return user, err
+	return users, err
 }
 
 func (f *userFlow) Register(user entity.User) (referralLink string, err error) {
