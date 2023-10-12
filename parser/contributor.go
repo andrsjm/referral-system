@@ -1,6 +1,7 @@
 package parser
 
 import (
+	"fmt"
 	"net/http"
 	"referral-system/entity"
 )
@@ -18,6 +19,10 @@ func (p *contributorParser) ParseContributorEntity(r *http.Request) (entity.Cont
 
 	contributor.ReferralCode = req.pathParam("code")
 	contributor.Email = req.param("email")
+
+	if contributor.ReferralCode == "" || contributor.Email == "" {
+		return contributor, fmt.Errorf("error")
+	}
 
 	return contributor, nil
 }

@@ -21,7 +21,6 @@ func (p *userParser) ParseUserEntity(r *http.Request) (entity.User, error) {
 	}
 
 	user.Password = HashPassword(user.Password)
-	user.ID = p.ParseBlogID(r)
 
 	return user, nil
 }
