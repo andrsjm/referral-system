@@ -4,6 +4,7 @@ import (
 	"crypto/md5"
 	"encoding/hex"
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"referral-system/constant"
 	"strconv"
@@ -92,4 +93,13 @@ func HashPassword(password string) string {
 	hashedString := hex.EncodeToString(hashedBytes)
 
 	return hashedString
+}
+
+func EntityStringify(v interface{}) string {
+	byteData, err := json.Marshal(v)
+	if err != nil {
+		fmt.Println("e:jsonMarshal", byteData)
+	}
+
+	return string(byteData)
 }
